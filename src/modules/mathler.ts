@@ -11,6 +11,12 @@ import {
   SpecialInputCharacter,
   TileState,
 } from 'types';
+import {
+  getObjectWithMaxValue,
+  getPermutations,
+  getUniqueValues,
+  hasSamePrimitiveValues,
+} from 'modules/arrays';
 
 export const initialGameBoard: GameBoard = [
   ['', '', '', '', '', ''],
@@ -30,6 +36,41 @@ export const operatorAndSpecialKeys = [
   ...operatorKeys,
   SpecialInputCharacter.KEY_ENTER,
 ];
+
+export const getEquivalentEquations = (equationToGuess: string) => {
+  const valueToGuess = eval(equationToGuess);
+
+  const validPermutations = getPermutations(equationToGuess.split('')).filter(
+    (chars) => validateEquationString(chars.join('')),
+  );
+  const equivalentEquations = validPermutations
+    .filter((chars) => {
+      try {
+        const equation = chars.join('');
+        const result = eval(equation);
+        if (result !== valueToGuess) {
+          return false;
+        }
+        if (
+          !hasSamePrimitiveValues(
+            getNumbersFromEquation(equation),
+            getNumbersFromEquation(equationToGuess),
+          )
+        ) {
+          return false;
+        }
+        return true;
+      } catch {
+        return false;
+      }
+    })
+    .map((equation) => equation.join(''));
+
+  return getUniqueValues(equivalentEquations);
+};
+
+export const getNumbersFromEquation = (equation: string) =>
+  equation.split(/[+\-*/]/).map(Number);
 
 export const validateEquationString = (equation: string) => {
   const equationPattern = /^\d+([+\-*/]\d+)+$/;
@@ -67,6 +108,26 @@ export const getRowState = (row: GameRow, guessedEquation: string) => {
   return equationGuess as RowState;
 };
 
+export const getBestFittedRowState = (row: GameRow): RowState => {
+  const equationsGuesses = currentGame.equivalentEquations.map((equation) => {
+    const guess = getRowState(row, equation);
+    return {
+      guess,
+      numberOfCorrect: guess.filter((state) => state === TileState.CORRECT)
+        .length,
+      equation,
+    };
+  });
+  const bestFittingEquation = getObjectWithMaxValue(
+    equationsGuesses,
+    'numberOfCorrect',
+  );
+  if (bestFittingEquation.numberOfCorrect > 0) {
+    currentGame.bestFittedEquation = bestFittingEquation.equation;
+  }
+  return bestFittingEquation.guess;
+};
+
 export const evaluateGameState = (boardState: BoardState): GameState => {
   const lastState = boardState.at(-1);
   if (!lastState) {
@@ -87,8 +148,9 @@ export const evaluateGameRow = (row: GameRow) => {
     return { error };
   }
 
-  const rowState = getRowState(row, currentGame.equationToGuess);
-
+  const rowState = currentGame.bestFittedEquation
+    ? getRowState(row, currentGame.bestFittedEquation)
+    : getBestFittedRowState(row);
   return { error: '', rowState };
 };
 
@@ -152,6 +214,7 @@ const equationToGuess = getDailyPuzzle();
 export const currentGame = {
   equationToGuess,
   valueToGuess: eval(equationToGuess),
+  equivalentEquations: getEquivalentEquations(equationToGuess),
   bestFittedEquation: '',
   gameResult: '',
 };
