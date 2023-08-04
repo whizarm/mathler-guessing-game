@@ -1,0 +1,25 @@
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  min-width: 15px;
+  padding: 5px;
+  background-color: lightgray;
+}
+
+.correct {
+  background-color: green;
+}
+
+.misplaced {
+  background-color: orange;
+}
+
+.incorrect {
+  background-color: gray;
+}
+
+.wide {
+  grid-column: span 3;
+}

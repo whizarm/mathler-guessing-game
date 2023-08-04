@@ -1,0 +1,23 @@
+.inputPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.digits {
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  gap: 5px;
+}
+
+.operators {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(30px, max-content);
+  gap: 5px;
+  justify-content: center;
+}
+
+.wideGridCell {
+  grid-column: span 3;
+}
