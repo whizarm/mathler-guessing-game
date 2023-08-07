@@ -3,3 +3,4 @@ export * from './Button/Button';
 export * from './GameResult/GameResult';
 export * from './Tile/Tile';
 export * from './InputPanel/InputPanel';
+export * from './ErrorToast/ErrorToast';

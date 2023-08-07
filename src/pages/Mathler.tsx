@@ -6,7 +6,7 @@ import {
   InputCharacter,
   SpecialInputCharacter,
 } from 'types';
-import { Board, GameResult, InputPanel } from 'components';
+import { Board, GameResult, ErrorToast, InputPanel } from 'components';
 import {
   currentGame,
   evaluateGameRow,
@@ -100,7 +100,7 @@ const Mathler = () => {
         handleInput={handleInput}
       />
       <GameResult gameState={gameState} />
-      {error}
+      <ErrorToast error={error} />
     </div>
   );
 };
