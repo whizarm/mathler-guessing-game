@@ -1,25 +1,127 @@
+$borderColor: $mediumGray;
+$backgroundColor: $lightGray;
+$textColor: $darkestGray;
+
 .tile {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
   min-width: 15px;
   padding: 5px;
-  background-color: lightgray;
+  border-radius: 2px;
+  border: 1px solid $borderColor;
+  background-color: $backgroundColor;
+  color: $textColor;
+  transition: border-width 0.15s;
+}
+
+.isNotWritable {
+  border-color: $darkGray;
+  background-color: $darkGray;
+  color: $white;
+  transition: opacity 0.3s;
+  animation-delay: 1.5s !important;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.filled {
+  animation: bounce 0.35s ease-in-out 0s;
+}
+
+.correct,
+.misplaced,
+.incorrect {
+  color: $white;
+  border: 1px solid transparent;
+
+  animation: flip 0.55s backwards;
+
+  &:nth-child(6n + 2) {
+    animation-delay: 0.3s;
+  }
+  &:nth-child(6n + 3) {
+    animation-delay: 0.6s;
+  }
+  &:nth-child(6n + 4) {
+    animation-delay: 0.9s;
+  }
+  &:nth-child(6n + 5) {
+    animation-delay: 1.2s;
+  }
+  &:nth-child(6n + 6) {
+    animation-delay: $successDelayReveal;
+  }
+
+  &.isNotWritable {
+    animation: flip 0.55s backwards 1.5s;
+  }
 }
 
 .correct {
-  background-color: green;
+  background-color: $successColor;
 }
 
 .misplaced {
-  background-color: orange;
+  background-color: $warningColor;
 }
 
 .incorrect {
-  background-color: gray;
+  background-color: $incorrectColor;
 }
 
 .wide {
   grid-column: span 3;
+}
+
+.isInCurrentRow {
+  background-color: $white;
+}
+
+.isWithError {
+  border-color: $errorColor;
+}
+
+.isCurrentTile {
+  border-bottom-width: 3px;
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0);
+    background-color: $backgroundColor;
+    color: $borderColor;
+  }
+
+  45% {
+    transform: rotateX(90deg);
+    background-color: $backgroundColor;
+    color: $borderColor;
+  }
+
+  60% {
+    transform: rotateX(90deg);
+    border-color: $borderColor;
+  }
+
+  100% {
+    transform: rotateX(0);
+    border-color: $borderColor;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.25);
+  }
+
+  100% {
+    border-color: $borderColor;
+  }
 }

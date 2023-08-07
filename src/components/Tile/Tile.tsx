@@ -15,10 +15,34 @@ export const getTileTypeClass = (state: TileState) => {
   }
 };
 
-type TileProps = { content: GameTile | InputCharacter; state?: TileState };
+type TileProps = {
+  content: GameTile | InputCharacter;
+  isWritable?: boolean;
+  isInCurrentColumn?: boolean;
+  isInCurrentRow?: boolean;
+  isWithError?: boolean;
+  state?: TileState;
+};
 
-export const Tile = ({ content, state = TileState.DEFAULT }: TileProps) => (
-  <div className={[styles.tile, getTileTypeClass(state)].join(' ')}>
+export const Tile = ({
+  content,
+  isWritable = true,
+  isInCurrentColumn = false,
+  isInCurrentRow = false,
+  isWithError = false,
+  state = TileState.DEFAULT,
+}: TileProps) => (
+  <div
+    className={[
+      styles.tile,
+      getTileTypeClass(state),
+      isInCurrentRow ? styles.isInCurrentRow : '',
+      isInCurrentColumn && isInCurrentRow ? styles.isCurrentTile : '',
+      isInCurrentRow && isWithError ? styles.isWithError : '',
+      !isWritable ? styles.isNotWritable : '',
+      isWritable && content ? styles.filled : '',
+    ].join(' ')}
+  >
     {content}
   </div>
 );

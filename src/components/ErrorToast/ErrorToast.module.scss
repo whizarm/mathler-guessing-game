@@ -1,12 +1,13 @@
 .toast {
   position: fixed;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 5px;
+  box-shadow: 0 0 3px 1px $errorColor;
   left: 50%;
-  padding: 1.5rem;
-  top: 375px;
+  top: 78px;
   transform: translate(-50%, -50%);
-  min-width: 10%;
+  padding: 15px;
+  min-width: 300px;
+  min-height: 18px;
   z-index: 100;
 
   display: flex;
@@ -14,11 +15,15 @@
   align-items: center;
   flex-direction: column;
 
-  background: red;
+  background: $errorColor;
+  color: $white;
+  transition: opacity 0.3s;
 }
 
 .toast__hide {
-  display: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: -1;
 }
 
 @media (max-width: 768px) {

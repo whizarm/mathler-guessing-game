@@ -6,9 +6,8 @@ import {
   InputCharacter,
   SpecialInputCharacter,
 } from 'types';
-import { Board, GameResult, ErrorToast, InputPanel } from 'components';
+import { Board, ErrorToast, GameResult, Header, InputPanel } from 'components';
 import {
-  currentGame,
   evaluateGameRow,
   getCurrentPosition,
   initialBoardState,
@@ -109,7 +108,7 @@ const Mathler = () => {
 
   return (
     <div className={styles.game}>
-      Try to guess the equation which result is {currentGame.valueToGuess}
+      <Header />
       <Board gameBoard={gameBoard} boardState={boardState} error={error} />
       <InputPanel
         boardState={boardState}

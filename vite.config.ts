@@ -12,4 +12,11 @@ export default defineConfig({
     setupFiles: ['.vitest/setup'],
     include: ['**/*test.{ts,tsx}'],
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "./src/config/variables.scss";`,
+      },
+    },
+  },
 });

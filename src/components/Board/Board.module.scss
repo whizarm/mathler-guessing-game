@@ -4,3 +4,28 @@
   grid-auto-rows: 30px;
   gap: 5px;
 }
+
+.error {
+  animation: shake 0.45s cubic-bezier(0.3, 0.1, 0.2, 1) both;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate(-1px);
+  }
+
+  20%,
+  80% {
+    transform: translate(2px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate(-3px);
+  }
+  40%,
+  60% {
+    transform: translate(3px);
+  }
+}
