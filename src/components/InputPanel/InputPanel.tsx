@@ -20,7 +20,7 @@ export const InputPanel = ({ handleInput, ...restProps }: InputPanelProps) => {
   const keysState = useInputPanel(restProps);
 
   return (
-    <div className={styles.inputPanel}>
+    <div className={styles.inputPanel} data-testid="input-panel">
       <div className={styles.digits}>
         {digitKeys.map((key) => (
           <Button key={key} onClick={() => handleInput(key)}>

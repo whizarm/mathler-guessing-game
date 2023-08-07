@@ -9,7 +9,7 @@ type BoardProps = {
 };
 
 export const Board = ({ boardState, gameBoard }: BoardProps) => (
-  <div className={styles.board}>
+  <div className={styles.board} data-testid="board">
     {gameBoard.map((gameRow, i) =>
       gameRow.map((gameTile, j) => (
         <Tile

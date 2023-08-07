@@ -8,9 +8,7 @@ export interface ErrorToastProps {
 
 export const ErrorToast: React.FC<ErrorToastProps> = ({ error = '' }) => {
   const content = !error ? null : (
-    <div className={[styles.toast, error ? '' : styles.toast__hide].join(' ')}>
-      {error}
-    </div>
+    <div className={[styles.toast, styles.toast__hide].join(' ')}>{error}</div>
   );
 
   return ReactDOM.createPortal(

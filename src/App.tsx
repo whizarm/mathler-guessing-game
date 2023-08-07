@@ -1,4 +1,5 @@
 import Mathler from 'pages/Mathler';
+
 const App = () => (
   <div>
     <Mathler />

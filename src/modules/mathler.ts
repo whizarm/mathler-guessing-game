@@ -78,10 +78,13 @@ export const validateEquationString = (equation: string) => {
   return equationPattern.test(equation) && noDivideByZero.test(equation);
 };
 
-export const getEquationError = (row: GameRow) => {
+export const getEquationError = (
+  row: GameRow,
+  validateFunction: (equation: string) => boolean = validateEquationString,
+) => {
   try {
     const equation = row.join('');
-    if (!validateEquationString(equation)) {
+    if (!validateFunction(equation)) {
       return 'Incorrect equation';
     }
 
