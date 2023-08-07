@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   AllowedCharacter,
   GameBoard,
@@ -85,9 +85,27 @@ const Mathler = () => {
       case SpecialInputCharacter.KEY_DELETE:
         return onDeleteInput();
       default:
-        return onKeyInput(key);
+        if (/^[0-9*/+-]+$/.test(key)) {
+          return onKeyInput(key);
+        }
+        return;
     }
   };
+
+  const handleKeyDown = ({ key }: KeyboardEvent) => {
+    if (
+      SpecialInputCharacter.KEY_DELETE === key ||
+      SpecialInputCharacter.KEY_ENTER === key ||
+      /^[0-9*/+-]+$/.test(key)
+    ) {
+      handleInput(key as InputCharacter);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  });
 
   return (
     <div className={styles.game}>
