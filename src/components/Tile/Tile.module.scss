@@ -37,26 +37,26 @@ $textColor: $darkestGray;
   color: $white;
   border: 1px solid transparent;
 
-  animation: flip 0.55s backwards;
+  animation: flip $flipReveal backwards;
 
   &:nth-child(6n + 2) {
-    animation-delay: 0.3s;
+    animation-delay: calc($successDelayReveal * 1 / 5);
   }
   &:nth-child(6n + 3) {
-    animation-delay: 0.6s;
+    animation-delay: calc($successDelayReveal * 2 / 5);
   }
   &:nth-child(6n + 4) {
-    animation-delay: 0.9s;
+    animation-delay: calc($successDelayReveal * 3 / 5);
   }
   &:nth-child(6n + 5) {
-    animation-delay: 1.2s;
+    animation-delay: calc($successDelayReveal * 4 / 5);
   }
   &:nth-child(6n + 6) {
     animation-delay: $successDelayReveal;
   }
 
   &.isNotWritable {
-    animation: flip 0.55s backwards 1.5s;
+    animation: flip $flipReveal backwards $successDelayReveal;
   }
 }
 
