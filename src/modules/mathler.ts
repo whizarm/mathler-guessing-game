@@ -1,5 +1,6 @@
 import puzzles from 'config/puzzles';
 import {
+  CurrentGame,
   BoardState,
   Digit,
   GameBoard,
@@ -39,7 +40,6 @@ export const operatorAndSpecialKeys = [
 
 export const getEquivalentEquations = (equationToGuess: string) => {
   const valueToGuess = eval(equationToGuess);
-
   const validPermutations = getPermutations(equationToGuess.split('')).filter(
     (chars) => validateEquationString(chars.join('')),
   );
@@ -210,14 +210,38 @@ export const getCurrentPosition = ({
 };
 
 /* to be changed to be a different puzzle every day */
-const getDailyPuzzle = () => puzzles[0];
+export const getStartingPuzzle = () => puzzles[2];
+export const resetThisPuzzle = () => {
+  currentGame = createCurrentGame(currentGame.equationToGuess);
+};
+export const getRandomPuzzle = () => {
+  puzzlesPlayed.push(currentGame.equationToGuess);
 
-const equationToGuess = getDailyPuzzle();
+  const differentPuzzles = puzzles.filter(
+    (puzzle) => !puzzlesPlayed.includes(puzzle),
+  );
 
-export const currentGame = {
-  equationToGuess,
-  valueToGuess: eval(equationToGuess),
-  equivalentEquations: getEquivalentEquations(equationToGuess),
+  if (!differentPuzzles.length) {
+    puzzlesPlayed.length = 0;
+    getRandomPuzzle();
+    return;
+  }
+
+  const randomIndex = Math.floor(Math.random() * differentPuzzles.length);
+  const newEquation = differentPuzzles[randomIndex];
+
+  currentGame = createCurrentGame(newEquation);
+  return newEquation;
+};
+
+const puzzlesPlayed: string[] = [];
+
+const createCurrentGame = (equation: string): CurrentGame => ({
+  equationToGuess: equation,
+  valueToGuess: eval(equation),
+  equivalentEquations: getEquivalentEquations(equation),
   bestFittedEquation: '',
   gameResult: '',
-};
+});
+
+export let currentGame = createCurrentGame(getStartingPuzzle());

@@ -10,8 +10,10 @@ import { Board, ErrorToast, GameResult, Header, InputPanel } from 'components';
 import {
   evaluateGameRow,
   getCurrentPosition,
+  getRandomPuzzle,
   initialBoardState,
   initialGameBoard,
+  resetThisPuzzle,
 } from 'modules/mathler';
 import { useGameState } from 'hooks/useGameState';
 import styles from './Mathler.module.scss';
@@ -28,6 +30,22 @@ const Mathler = () => {
     isRowEmpty,
     isRowFull,
   } = getCurrentPosition({ boardState, gameBoard });
+
+  const resetGameBoard = () => {
+    setGameBoard(initialGameBoard);
+    setBoardState(initialBoardState);
+    setError('');
+  };
+
+  const getNewPuzzle = () => {
+    getRandomPuzzle();
+    resetGameBoard();
+  };
+
+  const tryThisPuzzleAgain = () => {
+    resetThisPuzzle();
+    resetGameBoard();
+  };
 
   const onSubmitInput = () => {
     if (!isRowFull) {
@@ -116,7 +134,11 @@ const Mathler = () => {
         gameBoard={gameBoard}
         handleInput={handleInput}
       />
-      <GameResult gameState={gameState} />
+      <GameResult
+        gameState={gameState}
+        onNewPuzzle={getNewPuzzle}
+        onRetryPuzzle={tryThisPuzzleAgain}
+      />
       <ErrorToast error={error} />
     </div>
   );

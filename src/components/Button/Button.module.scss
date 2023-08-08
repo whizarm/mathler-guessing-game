@@ -4,6 +4,14 @@
   padding: 0;
   background: none;
   border: none;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:focus-visible {
+    outline: $focusColor auto 1px;
+  }
 }
 
 .highlighted {

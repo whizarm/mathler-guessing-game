@@ -1,7 +1,7 @@
 import styles from './Button.module.scss';
 
 type ButtonProps = {
-  children: JSX.Element;
+  children: JSX.Element | string;
   onClick: () => void;
   className?: string;
   isHighlighted?: boolean;

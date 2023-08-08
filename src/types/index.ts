@@ -24,6 +24,14 @@ export type BoardState = RowState[];
 
 export type GameState = 'WON' | 'LOST' | '';
 
+export type CurrentGame = {
+  equationToGuess: string;
+  valueToGuess: number;
+  equivalentEquations: string[];
+  bestFittedEquation: string;
+  gameResult: GameState;
+};
+
 export type KeyState = {
   [key in AllowedCharacter]: TileState;
 };
