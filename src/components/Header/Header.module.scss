@@ -3,6 +3,12 @@
   margin-bottom: 10px;
 }
 
+.sectionWithButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .title {
   margin: 15px;
   text-align: center;
@@ -10,6 +16,38 @@
   text-transform: uppercase;
 }
 
+%headerButton {
+  border-radius: 100%;
+  width: 26px;
+  height: 26px;
+  color: $white;
+  background-color: $darkGray;
+}
+
+.helpButton {
+  @extend %headerButton;
+  transition: 200ms;
+}
+
+.resultsButton {
+  @extend %headerButton;
+
+  &:hover {
+    transition: opacity 300ms 0ms;
+  }
+}
+
 .valueToGuess {
   font-weight: bold;
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 300ms 0ms;
+}
+
+.show {
+  opacity: 1;
+  transition: opacity 300ms $modalDelayReveal;
 }

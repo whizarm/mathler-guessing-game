@@ -6,7 +6,7 @@ import {
   InputCharacter,
   SpecialInputCharacter,
 } from 'types';
-import { Board, ErrorToast, GameResult, Header, InputPanel } from 'components';
+import { Board, ErrorToast, Header, InputPanel } from 'components';
 import {
   evaluateGameRow,
   getCurrentPosition,
@@ -126,18 +126,17 @@ const Mathler = () => {
 
   return (
     <div className={styles.game}>
-      <Header />
+      <Header
+        gameState={gameState}
+        onNewPuzzle={getNewPuzzle}
+        onRetryPuzzle={tryThisPuzzleAgain}
+      />
       <Board gameBoard={gameBoard} boardState={boardState} error={error} />
       <InputPanel
         boardState={boardState}
         error={error}
         gameBoard={gameBoard}
         handleInput={handleInput}
-      />
-      <GameResult
-        gameState={gameState}
-        onNewPuzzle={getNewPuzzle}
-        onRetryPuzzle={tryThisPuzzleAgain}
       />
       <ErrorToast error={error} />
     </div>

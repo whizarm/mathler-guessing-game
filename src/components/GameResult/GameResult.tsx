@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { GameState } from 'types';
-import { Button, Modal } from 'components';
+import { Button } from 'components';
+import styles from './GameResult.module.scss';
 
 type GameResultProps = {
   gameState: GameState;
@@ -13,37 +13,24 @@ export const GameResult = ({
   onNewPuzzle,
   onRetryPuzzle,
 }: GameResultProps) => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>();
-  const closeModal = () => setIsModalOpen(false);
-  const shouldShowModal = isModalOpen ?? gameState !== '';
-
   return (
-    <Modal
-      isOpen={shouldShowModal}
-      onClose={closeModal}
-      title="Game Over"
-      showWithDelay={true}
-    >
-      <div>
-        {gameState === 'WON' && (
-          <>
-            <h3>
-              Congratulations! You&#39;ve won 🎉
-              <Button onClick={onNewPuzzle}>
-                Do you want to play a random puzzle?
-              </Button>
-            </h3>
-          </>
-        )}
-        {gameState === 'LOST' && (
-          <>
-            <h3>
-              Oh no! You&#39;ve lost 🥹
-              <Button onClick={onRetryPuzzle}>Try again?</Button>
-            </h3>
-          </>
-        )}
-      </div>
-    </Modal>
+    <div className={styles.results}>
+      {gameState === 'WON' && (
+        <>
+          <h3 className={styles.success}>Congratulations! You&#39;ve won 🎉</h3>
+          <Button onClick={onNewPuzzle} className={styles.button}>
+            Play a random puzzle
+          </Button>
+        </>
+      )}
+      {gameState === 'LOST' && (
+        <>
+          <h3 className={styles.error}>Oh no! You&#39;ve lost 🥹</h3>
+          <Button onClick={onRetryPuzzle} className={styles.button}>
+            Try again?
+          </Button>
+        </>
+      )}
+    </div>
   );
 };
