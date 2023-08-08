@@ -11,6 +11,9 @@ export default defineConfig({
     environment: 'happy-dom',
     setupFiles: ['.vitest/setup'],
     include: ['**/*test.{ts,tsx}'],
+    coverage: {
+      exclude: ['*config.{js,ts}', '.*'],
+    },
   },
   css: {
     preprocessorOptions: {
