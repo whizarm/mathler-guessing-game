@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import Mathler from './Mathler';
 import { currentGame } from 'modules/mathler';
+import puzzles from 'config/puzzles';
 
 const { getByTestId, getByText } = screen;
 
@@ -29,7 +30,7 @@ describe('Mathler', () => {
   });
 
   test('renders Mathler component correctly', () => {
-    getByText(/Try to guess the equation which result is/i);
+    getByText(/Guess the hidden calculation that equals/i);
   });
 
   describe('user input', () => {
@@ -138,20 +139,11 @@ describe('Mathler', () => {
       typeStringOnKeyboard(inputPanel, { key: 'Enter' });
 
       getByText('Incorrect equation');
-
       typeStringOnKeyboard(inputPanel, { key: 'Backspace' });
     });
   });
 
   describe('game', () => {
-    test('can be won', () => {
-      const inputPanel = getByTestId('input-panel');
-      typeStringOnKeyboard(inputPanel, currentGame.equationToGuess);
-      typeStringOnKeyboard(inputPanel, { key: 'Enter' });
-
-      getByText(/congratulations! you've won/i);
-    });
-
     test('can be lost', () => {
       const inputPanel = getByTestId('input-panel');
       for (let i = 0; i < currentGame.equationToGuess.length; i++) {
@@ -160,6 +152,100 @@ describe('Mathler', () => {
       }
 
       getByText(/oh no! you've lost/i);
+    });
+
+    test('can be restarted after losing daily challenge', () => {
+      const originalValueToGuess = currentGame.valueToGuess;
+      const instructionElement = getByText(
+        /Guess the hidden calculation that equals/i,
+      );
+      expect(instructionElement.innerText).toContain(originalValueToGuess);
+
+      const inputPanel = getByTestId('input-panel');
+      for (let i = 0; i < currentGame.equationToGuess.length; i++) {
+        typeStringOnKeyboard(inputPanel, '1+5+11');
+        typeStringOnKeyboard(inputPanel, { key: 'Enter' });
+      }
+
+      getByText(/oh no! you've lost/i);
+
+      const newGameButton = getByText('Try again?');
+      fireEvent.click(newGameButton);
+
+      expect(instructionElement.innerText).toContain(originalValueToGuess);
+
+      const board = getByTestId('board');
+      expect(getBoardContents(board)).toBe('');
+    });
+
+    test('can be won', () => {
+      const inputPanel = getByTestId('input-panel');
+      typeStringOnKeyboard(inputPanel, currentGame.equationToGuess);
+      typeStringOnKeyboard(inputPanel, { key: 'Enter' });
+
+      getByText(/congratulations! you've won/i);
+    });
+
+    test('displays game results modal automatically after game ends', () => {
+      const inputPanel = getByTestId('input-panel');
+      typeStringOnKeyboard(inputPanel, currentGame.equationToGuess);
+      typeStringOnKeyboard(inputPanel, { key: 'Enter' });
+
+      getByText(/congratulations! you've won/i);
+    });
+
+    test('can be started with a new puzzle after winning daily challenge', () => {
+      const originalValueToGuess = currentGame.valueToGuess;
+      const instructionElement = getByText(
+        /Guess the hidden calculation that equals/i,
+      );
+      expect(instructionElement.innerText).toContain(originalValueToGuess);
+
+      const inputPanel = getByTestId('input-panel');
+      typeStringOnKeyboard(inputPanel, currentGame.equationToGuess);
+      typeStringOnKeyboard(inputPanel, { key: 'Enter' });
+
+      getByText(/congratulations! you've won/i);
+
+      const newGameButton = getByText('Play a random puzzle');
+      fireEvent.click(newGameButton);
+
+      expect(instructionElement.innerText).not.toContain(originalValueToGuess);
+      expect(instructionElement.innerText).toContain(currentGame.valueToGuess);
+
+      const board = getByTestId('board');
+      expect(getBoardContents(board)).toBe('');
+    });
+
+    test('can be started with a random previously solved equation if all puzzles are solved', () => {
+      const puzzlesPlayed = [];
+      for (let i = 0; i < puzzles.length; i++) {
+        puzzlesPlayed.push(currentGame.equationToGuess);
+
+        const inputPanel = getByTestId('input-panel');
+        typeStringOnKeyboard(inputPanel, currentGame.equationToGuess);
+        typeStringOnKeyboard(inputPanel, { key: 'Enter' });
+
+        getByText(/congratulations! you've won/i);
+
+        const newGameButton = getByText('Play a random puzzle');
+        fireEvent.click(newGameButton);
+      }
+
+      const inputPanel = getByTestId('input-panel');
+      typeStringOnKeyboard(inputPanel, currentGame.equationToGuess);
+      typeStringOnKeyboard(inputPanel, { key: 'Enter' });
+
+      getByText(/congratulations! you've won/i);
+
+      expect(puzzlesPlayed.includes(currentGame.equationToGuess)).toBe(true);
+    });
+
+    test("displays help info in a modal after clicking '?' button", () => {
+      const openModalButton = getByText('?');
+      fireEvent.click(openModalButton);
+
+      getByText('?');
     });
 
     test('does not allow input after it ends', () => {

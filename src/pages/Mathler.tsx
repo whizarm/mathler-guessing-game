@@ -105,7 +105,6 @@ const Mathler = () => {
         if (/^[0-9*/+-]+$/.test(key)) {
           return onKeyInput(key);
         }
-        return;
     }
   };
 
