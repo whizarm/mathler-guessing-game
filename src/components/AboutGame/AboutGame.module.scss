@@ -1,0 +1,32 @@
+.about {
+  text-align: justify;
+  font-size: 14px;
+
+  p {
+    margin: 10px 0;
+  }
+
+  ul {
+    padding-left: 15px;
+    margin-top: 10px;
+  }
+
+  li {
+    padding: 3px 0;
+  }
+
+  h3 {
+    margin: 0;
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: $darkestGray;
+  }
+}
+
+.exampleTiles {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  padding-top: 10px;
+}

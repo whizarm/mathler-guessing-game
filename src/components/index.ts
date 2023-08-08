@@ -1,3 +1,4 @@
+export * from './AboutGame/AboutGame';
 export * from './Board/Board';
 export * from './Button/Button';
 export * from './ErrorToast/ErrorToast';
