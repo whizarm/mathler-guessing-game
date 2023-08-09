@@ -49,12 +49,6 @@ export const InputPanel = ({
                 ? styles.wideGridCell
                 : ''
             }
-            isHighlighted={
-              (isRowFull &&
-                error &&
-                key === SpecialInputCharacter.KEY_DELETE) ||
-              (isRowFull && !error && key === SpecialInputCharacter.KEY_ENTER)
-            }
           >
             <Tile
               state={
@@ -65,6 +59,12 @@ export const InputPanel = ({
               }
               content={key}
               isWritable={false}
+              isHighlighted={
+                (isRowFull &&
+                  error &&
+                  key === SpecialInputCharacter.KEY_DELETE) ||
+                (isRowFull && !error && key === SpecialInputCharacter.KEY_ENTER)
+              }
             />
           </Button>
         ))}

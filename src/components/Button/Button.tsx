@@ -4,23 +4,10 @@ type ButtonProps = {
   children: JSX.Element | string;
   onClick: () => void;
   className?: string;
-  isHighlighted?: boolean;
 };
 
-export const Button = ({
-  children,
-  onClick,
-  className = '',
-  isHighlighted = false,
-}: ButtonProps) => (
-  <button
-    className={[
-      styles.button,
-      isHighlighted ? styles.highlighted : '',
-      className,
-    ].join(' ')}
-    onClick={onClick}
-  >
+export const Button = ({ children, onClick, className = '' }: ButtonProps) => (
+  <button className={[styles.button, className].join(' ')} onClick={onClick}>
     {children}
   </button>
 );

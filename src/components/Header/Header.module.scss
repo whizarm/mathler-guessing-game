@@ -12,25 +12,32 @@
 .title {
   margin: 15px;
   text-align: center;
-  font-size: 24px;
-  text-transform: uppercase;
+  background-image: linear-gradient(
+    to right,
+    $errorColor 0% 43%,
+    $warningColor 43% 68%,
+    $successColor 68%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 %headerButton {
   border-radius: 100%;
   width: 26px;
   height: 26px;
-  color: $white;
-  background-color: $darkGray;
 }
 
 .helpButton {
   @extend %headerButton;
+  color: $white;
   transition: 200ms;
 }
 
 .resultsButton {
   @extend %headerButton;
+  border: 1px solid $darkGray;
 
   &:hover {
     transition: opacity 300ms 0ms;

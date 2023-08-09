@@ -1,5 +1,5 @@
-$borderColor: $mediumGray;
-$backgroundColor: $lightGray;
+$borderColor: $lightPurple;
+$backgroundColor: $lightPurple;
 $textColor: $darkestGray;
 
 .tile {
@@ -18,6 +18,7 @@ $textColor: $darkestGray;
 
 .isNotWritable {
   border-color: $darkGray;
+  border-radius: 999px;
   background-color: $darkGray;
   color: $white;
   transition: opacity 0.3s;
@@ -69,12 +70,16 @@ $textColor: $darkestGray;
   background-color: $incorrectColor;
 }
 
-.wide {
-  grid-column: span 3;
+.specialCharacter {
+  font-family: inherit;
+  padding: 2px 5px;
+  background-color: $white !important;
+  color: $darkestGray !important;
 }
 
 .isInCurrentRow {
   background-color: $white;
+  border-color: $darkPurple;
 }
 
 .isWithError {
@@ -85,17 +90,22 @@ $textColor: $darkestGray;
   border-bottom-width: 3px;
 }
 
+.isHighlighted {
+  animation: 0.4s jump ease infinite alternate;
+  animation-delay: 0s !important;
+}
+
 @keyframes flip {
   0% {
     transform: rotateX(0);
     background-color: $backgroundColor;
-    color: $borderColor;
+    color: $mediumGray;
   }
 
   45% {
     transform: rotateX(90deg);
     background-color: $backgroundColor;
-    color: $borderColor;
+    color: $mediumGray;
   }
 
   60% {
@@ -120,5 +130,16 @@ $textColor: $darkestGray;
 
   100% {
     border-color: $borderColor;
+  }
+}
+
+@keyframes jump {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+  100% {
+    transform: scale(1.08);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
   }
 }

@@ -1,7 +1,13 @@
-import { TileState, GameTile, InputCharacter } from 'types';
+import {
+  TileState,
+  GameTile,
+  InputCharacter,
+  SpecialInputCharacter,
+} from 'types';
+import { Icon } from 'components';
 import styles from './Tile.module.scss';
 
-export const getTileTypeClass = (state: TileState) => {
+export const getTileTypeClass = (state: TileState | undefined) => {
   switch (state) {
     case TileState.CORRECT:
       return styles.correct;
@@ -21,6 +27,7 @@ type TileProps = {
   isInCurrentColumn?: boolean;
   isInCurrentRow?: boolean;
   isWithError?: boolean;
+  isHighlighted?: boolean;
   state?: TileState;
 };
 
@@ -30,7 +37,8 @@ export const Tile = ({
   isInCurrentColumn = false,
   isInCurrentRow = false,
   isWithError = false,
-  state = TileState.DEFAULT,
+  isHighlighted = false,
+  state,
 }: TileProps) => (
   <div
     className={[
@@ -41,8 +49,18 @@ export const Tile = ({
       isInCurrentRow && isWithError ? styles.isWithError : '',
       !isWritable ? styles.isNotWritable : '',
       isWritable && content ? styles.filled : '',
+      isHighlighted ? styles.isHighlighted : '',
+      state === undefined ? styles.specialCharacter : '',
     ].join(' ')}
   >
-    {content}
+    {content === SpecialInputCharacter.KEY_ENTER && (
+      <Icon icon="enter" height="25" />
+    )}
+    {content === SpecialInputCharacter.KEY_DELETE && (
+      <Icon icon="delete" height="25" />
+    )}
+    {content !== SpecialInputCharacter.KEY_DELETE &&
+      content !== SpecialInputCharacter.KEY_ENTER &&
+      content}
   </div>
 );

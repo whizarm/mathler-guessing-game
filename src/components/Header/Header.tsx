@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { GameState } from 'types';
-import { AboutGame, Button, GameResult, Modal } from 'components';
+import { AboutGame, Button, GameResult, Icon, Modal } from 'components';
 import { currentGame } from 'modules/mathler';
 import styles from './Header.module.scss';
 
@@ -42,7 +42,7 @@ export const Header = ({
     <header className={styles.header}>
       <div className={styles.sectionWithButtons}>
         <Button onClick={openHelpModal} className={styles.helpButton}>
-          ?
+          <Icon icon="logo" />
         </Button>
         <h1 className={styles.title}>Mathler</h1>
         <Button
@@ -52,7 +52,7 @@ export const Header = ({
             gameState === '' ? styles.hide : styles.show,
           ].join(' ')}
         >
-          !
+          🏆
         </Button>
       </div>
       <div>

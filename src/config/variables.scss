@@ -3,13 +3,16 @@ $lightGray: #eaeef0;
 $mediumGray: #b8b8b8;
 $darkGray: #aaaaaa;
 $darkestGray: #727272;
+$lightPurple: #7d7de125;
+$purple: #7d7de1;
+$darkPurple: #5c5caa;
 $black: #333333;
 
 $successColor: #66a182;
 $warningColor: #e9bc27;
 $errorColor: #ff6766;
 $incorrectColor: $darkestGray;
-$focusColor: #7d7de1;
+$focusColor: $purple;
 
 $successDelayReveal: 1500ms;
 $flipReveal: 550ms;
