@@ -24,3 +24,17 @@ export const getPermutations = <T>(arr: T[]): T[][] => {
   }
   return result;
 };
+
+export const joinClassNames = (
+  classNames: (string | [boolean, string] | [boolean, string, string])[],
+) =>
+  classNames
+    .map((c) => {
+      if (typeof c === 'string') {
+        return c;
+      }
+      const [condition, classNameIfTrue, classNameIfFalse] = c;
+      return condition ? classNameIfTrue : classNameIfFalse ?? '';
+    })
+    .filter(Boolean)
+    .join(' ');

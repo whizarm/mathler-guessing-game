@@ -5,6 +5,7 @@ import {
   SpecialInputCharacter,
 } from 'types';
 import { Icon } from 'components';
+import { joinClassNames } from 'modules/arrays';
 import styles from './Tile.module.scss';
 
 export const getTileTypeClass = (state: TileState | undefined) => {
@@ -41,17 +42,17 @@ export const Tile = ({
   state,
 }: TileProps) => (
   <div
-    className={[
+    className={joinClassNames([
       styles.tile,
       getTileTypeClass(state),
-      isInCurrentRow ? styles.isInCurrentRow : '',
-      isInCurrentColumn && isInCurrentRow ? styles.isCurrentTile : '',
-      isInCurrentRow && isWithError ? styles.isWithError : '',
-      !isWritable ? styles.isNotWritable : '',
-      isWritable && content ? styles.filled : '',
-      isHighlighted ? styles.isHighlighted : '',
-      state === undefined ? styles.specialCharacter : '',
-    ].join(' ')}
+      [isInCurrentRow, styles.isInCurrentRow],
+      [isInCurrentColumn && isInCurrentRow, styles.isCurrentTile],
+      [isInCurrentRow && isWithError, styles.isWithError],
+      [!isWritable, styles.isNotWritable],
+      [isWritable && !!content, styles.filled],
+      [isHighlighted, styles.isHighlighted],
+      [state === undefined, styles.specialCharacter],
+    ])}
   >
     {content === SpecialInputCharacter.KEY_ENTER && (
       <Icon icon="enter" height="25" />

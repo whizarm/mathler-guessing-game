@@ -1,6 +1,7 @@
 import { BoardState, GameBoard } from 'types';
 import { Tile } from 'components';
 import { getCurrentPosition } from 'modules/mathler';
+import { joinClassNames } from 'modules/arrays';
 import { useGameState } from 'hooks/useGameState';
 import styles from './Board.module.scss';
 
@@ -19,7 +20,7 @@ export const Board = ({ boardState, gameBoard, error }: BoardProps) => {
 
   return (
     <div
-      className={[styles.board, error ? styles.error : ''].join(' ')}
+      className={joinClassNames([styles.board, [!!error, styles.error]])}
       data-testid="board"
     >
       {gameBoard.map((gameRow, i) =>

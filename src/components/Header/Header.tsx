@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { GameState } from 'types';
 import { AboutGame, Button, GameResult, Icon, Modal } from 'components';
 import { currentGame } from 'modules/mathler';
+import { joinClassNames } from 'modules/arrays';
 import styles from './Header.module.scss';
 
 type GameResultProps = {
@@ -47,10 +48,10 @@ export const Header = ({
         <h1 className={styles.title}>Mathler</h1>
         <Button
           onClick={openResultsModal}
-          className={[
+          className={joinClassNames([
             styles.resultsButton,
-            gameState === '' ? styles.hide : styles.show,
-          ].join(' ')}
+            [gameState === '', styles.hide, styles.show],
+          ])}
         >
           🏆
         </Button>

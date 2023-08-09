@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { joinClassNames } from 'modules/arrays';
 import styles from './ErrorToast.module.scss';
 
 export interface ErrorToastProps {
@@ -8,7 +9,7 @@ export interface ErrorToastProps {
 
 export const ErrorToast: React.FC<ErrorToastProps> = ({ error = '' }) => {
   const content = (
-    <div className={[styles.toast, error ? '' : styles.toast__hide].join(' ')}>
+    <div className={joinClassNames([styles.toast, [!error, styles.hide]])}>
       {error}
     </div>
   );

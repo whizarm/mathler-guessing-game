@@ -3,6 +3,7 @@ import {
   getPermutations,
   getUniqueValues,
   hasSamePrimitiveValues,
+  joinClassNames,
 } from '../arrays';
 
 describe('getUniqueValues', () => {
@@ -109,5 +110,24 @@ describe('getPermutations', () => {
     const result = getPermutations(input);
     expect(result).toHaveLength(6);
     expectedPermutations.forEach((p) => expect(result).toContainEqual(p));
+  });
+});
+
+describe('joinClassNames', () => {
+  test('joins regular classNames with spaces', () => {
+    const input: string[] = ['className1', 'className2'];
+    const concatenatedClasses = joinClassNames(input);
+    expect(concatenatedClasses).toEqual('className1 className2');
+  });
+
+  test('joins conditional classNames with spaces depending on their condition', () => {
+    const input: ([boolean, string] | [boolean, string, string])[] = [
+      [1 < 2, 'true1', 'false1'],
+      [1 > 2, 'true2', 'false2'],
+      [1 < 2, 'true3'],
+      [1 > 2, 'true4'],
+    ];
+    const concatenatedClasses = joinClassNames(input);
+    expect(concatenatedClasses).toEqual('true1 false2 true3');
   });
 });

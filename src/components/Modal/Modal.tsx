@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import { Button } from 'components';
+import { joinClassNames } from 'modules/arrays';
 import styles from './Modal.module.scss';
 
 export type ModalProps = {
@@ -17,27 +18,35 @@ export const Modal: React.FC<ModalProps> = ({
   title = '',
   showWithDelay = false,
 }) => {
+  const getShowTypeClass = (type: 'modal' | 'backdrop') => {
+    if (isOpen) {
+      if (type === 'modal') {
+        if (showWithDelay) {
+          return styles.showDelayedModal;
+        }
+        return styles.showModal;
+      }
+
+      if (type === 'backdrop') {
+        if (showWithDelay) {
+          return styles.showBackdropWithDelay;
+        }
+        return styles.showBackdrop;
+      }
+    }
+    return styles.hide;
+  };
+
   const content = (
     <div
-      className={[
+      className={joinClassNames([
         styles.backdrop,
-        isOpen
-          ? showWithDelay
-            ? styles.showBackdropWithDelay
-            : styles.showBackdrop
-          : styles.hide,
-      ].join(' ')}
+        getShowTypeClass('backdrop'),
+      ])}
       onClick={onClose}
     >
       <div
-        className={[
-          styles.modal,
-          isOpen
-            ? showWithDelay
-              ? styles.showDelayedModal
-              : styles.showModal
-            : styles.hide,
-        ].join(' ')}
+        className={joinClassNames([styles.modal, getShowTypeClass('modal')])}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={styles.header}>
