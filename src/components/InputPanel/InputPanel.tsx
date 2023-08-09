@@ -49,6 +49,7 @@ export const InputPanel = ({
                 ? styles.wideGridCell
                 : ''
             }
+            testId={`key-${key}`}
           >
             <Tile
               state={

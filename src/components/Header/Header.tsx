@@ -42,7 +42,11 @@ export const Header = ({
   return (
     <header className={styles.header}>
       <div className={styles.sectionWithButtons}>
-        <Button onClick={openHelpModal} className={styles.helpButton}>
+        <Button
+          onClick={openHelpModal}
+          className={styles.helpButton}
+          testId="help-button"
+        >
           <Icon icon="logo" />
         </Button>
         <h1 className={styles.title}>Mathler</h1>

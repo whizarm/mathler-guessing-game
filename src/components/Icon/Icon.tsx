@@ -15,8 +15,6 @@ const getIcon = (icon: IconProps['icon']) => {
       return deleteIcon;
     case 'logo':
       return logoIcon;
-    default:
-      return;
   }
 };
 

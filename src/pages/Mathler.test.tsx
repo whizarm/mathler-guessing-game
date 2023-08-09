@@ -80,8 +80,8 @@ describe('Mathler', () => {
       fireEvent.click(inputPanel.getByText('1'));
       fireEvent.click(inputPanel.getByText('+'));
       fireEvent.click(inputPanel.getByText('5'));
-      fireEvent.click(inputPanel.getByText('Backspace'));
-      fireEvent.click(inputPanel.getByText('Backspace'));
+      fireEvent.click(inputPanel.getByTestId('key-Backspace'));
+      fireEvent.click(inputPanel.getByTestId('key-Backspace'));
 
       const board = getByTestId('board');
       expect(getBoardContents(board)).toEqual('1');
@@ -241,11 +241,11 @@ describe('Mathler', () => {
       expect(puzzlesPlayed.includes(currentGame.equationToGuess)).toBe(true);
     });
 
-    test("displays help info in a modal after clicking '?' button", () => {
-      const openModalButton = getByText('?');
+    test('displays help info in a modal after clicking logo button', () => {
+      const openModalButton = getByTestId('help-button');
       fireEvent.click(openModalButton);
 
-      getByText('?');
+      getByText('How to play?');
     });
 
     test('does not allow input after it ends', () => {
